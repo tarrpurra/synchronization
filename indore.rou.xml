@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- generated on 2024-09-07 16:09:21 by Eclipse SUMO netedit Version 1.20.0
+-->
+
+<routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/routes_file.xsd">
+    <!-- Routes -->
+    <route id="route_1" edges="386928281#0 386928281#1 386928281#2 386928281#3 1196727682 1023336857#0 1023336857#1 1023336857#2 191495034#12 191495034#13 191495034#14 191495034#0 191495034#1 191495039#0 191495039#1 1023336849#0 1023336849#1 1023336849#2 1023336849#3 386907894 1026005551#0 1026005551#1 1026005551#2 1026005551#3 1264452601 386907890#0 386907890#1" color="0,128,0"/>
+    <!-- Vehicles, persons and containers (sorted by depart) -->
+    <vehicle id="v_0" type="DEFAULT_BIKETYPE" depart="00:00:00" route="route_1"/>
+    <vehicle id="v_1" depart="00:00:00" route="route_1"/>
+    <vehicle id="v_2" type="DEFAULT_TAXITYPE" depart="00:00:00" route="route_1"/>
+    <vehicle id="v_7" depart="00:00:00" route="route_1"/>
+</routes>
