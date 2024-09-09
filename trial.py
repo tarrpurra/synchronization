@@ -48,7 +48,7 @@ def main():
     step = 0
     tls_ids = traci.trafficlight.getIDList()  # Get all traffic light IDs in the network
 
-    while step < 1000:  # Simulate for 1000 steps
+    while traci.simulation.getMinExpectedNumber()>0:  # Simulate for 1000 steps
         traci.simulationStep()
         
         # Adjust traffic light durations based on vehicle counts

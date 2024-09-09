@@ -10,25 +10,22 @@ CYCLE_TIME = GREEN_DURATION + YELLOW_DURATION + RED_DURATION  # Total cycle time
 def synchronize_traffic_lights(tls_ids):
     current_time = traci.simulation.getTime()
     for tls_id in tls_ids:
-        # Get current phase information
-        current_phase = traci.trafficlight.getPhase(tls_id)
-        current_duration = traci.trafficlight.getPhaseDuration(tls_id)
-        
         # Calculate synchronized phase
-        phase_index = int((current_time % CYCLE_TIME) / (CYCLE_TIME / 4))  # Assuming 4 phases
+        phase_index = int((current_time % CYCLE_TIME) / (CYCLE_TIME / 3))  # Assuming 3 phases
         traci.trafficlight.setPhase(tls_id, phase_index)
         print(f"Traffic light {tls_id} synchronized to phase {phase_index}.")
 
-def adjust_traffic_lights(tls_ids, edge_ids, threshold=10):
-    for tls_id in tls_ids:
-        # Aggregate vehicle counts from all edges
-        total_vehicle_count = sum(traci.edge.getLastStepVehicleNumber(edge_id) for edge_id in edge_ids)
-        
-        # Adjust phase duration based on aggregated vehicle count
-        if total_vehicle_count > threshold:
-            traci.trafficlight.setPhaseDuration(tls_id, GREEN_DURATION + 10)  # Extend green phase
-        else:
-            traci.trafficlight.setPhaseDuration(tls_id, GREEN_DURATION)
+def adjust_traffic_lights(tls_id, edge_ids, threshold=10):
+    # Aggregate vehicle counts from all edges
+    total_vehicle_count = sum(traci.edge.getLastStepVehicleNumber(edge_id) for edge_id in edge_ids)
+    
+    # Adjust phase duration based on aggregated vehicle count
+    if total_vehicle_count > threshold:
+        traci.trafficlight.setPhaseDuration(tls_id, GREEN_DURATION + 10)  # Extend green phase
+        print(f"Extending green phase for {tls_id}. Vehicle count: {total_vehicle_count}")
+    else:
+        traci.trafficlight.setPhaseDuration(tls_id, GREEN_DURATION)
+        print(f"Keeping default green phase for {tls_id}. Vehicle count: {total_vehicle_count}")
 
 def main():
     # Start SUMO simulation
@@ -60,7 +57,7 @@ def main():
         
         # Adjust traffic light durations based on vehicle counts
         for tls_id, edge_ids in edge_mapping.items():
-            adjust_traffic_lights([tls_id], edge_ids)
+            adjust_traffic_lights(tls_id, edge_ids)
         
         step += 1
     end_time = time.time()
